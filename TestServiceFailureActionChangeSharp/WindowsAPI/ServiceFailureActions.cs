@@ -26,12 +26,17 @@ namespace TestServiceFailureActionChangeSharp.WindowsAPI
 
 				using (failureActionsStructure.Lock())
 				{
+					/*
+					 * Diagnostic code: Marshal the structure to separate buffer, to inspect the marshaling behaviour and keep it off the stack.
+					 * 
+
 					int defaultSize = Marshal.SizeOf(typeof(SERVICE_FAILURE_ACTIONSW));
 					int actualSize = Marshal.SizeOf(failureActionsStructure);
 
 					IntPtr structure = Marshal.AllocHGlobal(100000);
 
 					Marshal.StructureToPtr(failureActionsStructure, structure, fDeleteOld: false);
+					 */
 
 					success = NativeMethods.ChangeServiceConfig2W(
 						(int)serviceHandle.DangerousGetHandle(),
@@ -41,8 +46,10 @@ namespace TestServiceFailureActionChangeSharp.WindowsAPI
 					if (!success)
 						throw new Win32Exception();
 
+					/*
 					Marshal.DestroyStructure(structure, typeof(SERVICE_FAILURE_ACTIONSW));
 					Marshal.FreeHGlobal(structure);
+					 */
 				}
 
 				success = NativeMethods.ChangeServiceConfig2W(
