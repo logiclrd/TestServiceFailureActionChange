@@ -39,8 +39,8 @@ namespace TestServiceFailureActionChangeSharp.WindowsAPI
 					 */
 
 					success = NativeMethods.ChangeServiceConfig2W(
-						(int)serviceHandle.DangerousGetHandle(),
-						(int)ServiceConfigType.SERVICE_CONFIG_FAILURE_ACTIONS,
+						serviceHandle,
+						ServiceConfigType.SERVICE_CONFIG_FAILURE_ACTIONS,
 						ref failureActionsStructure);
 
 					if (!success)
@@ -53,7 +53,7 @@ namespace TestServiceFailureActionChangeSharp.WindowsAPI
 				}
 
 				success = NativeMethods.ChangeServiceConfig2W(
-					serviceHandle.DangerousGetHandle(),
+					serviceHandle,
 					ServiceConfigType.SERVICE_CONFIG_FAILURE_ACTIONS_FLAG,
 					ref failureActionsFlagStructure);
 
